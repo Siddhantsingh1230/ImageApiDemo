@@ -5,10 +5,10 @@ const Card = ({ styleClass, url }) => {
   let styles = {
     borderRadius: "1rem",
     margin: "0.5rem",
-    backgroundImage:`url(${url})`,
-    backgroundRepeat:"no-repeat",
-    backgroundSize:"cover",
-    backgroundPosition:"center",
+    backgroundImage: `url(${url})`,
+    backgroundRepeat: "no-repeat",
+    backgroundSize: "cover",
+    backgroundPosition: "center",
   };
   return (
     <>
@@ -18,29 +18,41 @@ const Card = ({ styleClass, url }) => {
 };
 
 const App = () => {
-  const [imageData,setImageData]=useState([]);
-  const classNames=["small","medium","big"];
-  const fetchData=()=>{
-    fetch(process.env.REACT_APP_API_KEY).then(response => response.json())
-    .then((data) => {
-      setImageData(data.hits);
-    });
+  const [imageData, setImageData] = useState([]);
+  const classNames = ["small", "medium", "big"];
+  const fetchData = () => {
+    try {
+      fetch(process.env.REACT_APP_API_KEY)
+        .then((response) => response.json())
+        .then((data) => {
+          setImageData(data.hits);
+        });
+    } catch (e) {
+      console.log("Can't fetch images at this moment");
+    }
   };
-  const randomSizeGeneartor = ()=>{
-    return classNames[Math.floor(Math.random()*3)];
-  }
-  useEffect(()=>{
+  const randomSizeGeneartor = () => {
+    return classNames[Math.floor(Math.random() * 3)];
+  };
+  useEffect(() => {
     fetchData();
-  },[]);
+  }, []);
   return (
     <>
       <div className="container">
-        {imageData.length>0?
-          imageData.map((item,idx)=>{
-            return(<Card key={idx} url={item.largeImageURL} styleClass={randomSizeGeneartor()}/>);
-          }):null
-        
-        }  
+        {imageData.length > 0
+          ? imageData.map((item, idx) => {
+              return (
+                <Card
+                  key={idx}
+                  url={item.largeImageURL}
+                  styleClass={randomSizeGeneartor()}
+                />
+              );
+            })
+          : <div className="empty">No images 😢</div>
+          }
+          
       </div>
     </>
   );

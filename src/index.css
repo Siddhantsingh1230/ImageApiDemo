@@ -51,3 +51,16 @@ body,html{
   background-color: rgb(62, 110, 255);
 }
 
+.empty{
+  color: white;
+  font-size: 2rem;
+  text-align: center;
+  font-weight: 500;
+  font-family:Verdana, Geneva, Tahoma, sans-serif;
+  opacity: 0.6;
+  width: 80%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+}
